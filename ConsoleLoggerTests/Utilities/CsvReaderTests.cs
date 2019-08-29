@@ -15,7 +15,7 @@ namespace ConsoleLogger.Utilities.Tests
         public void SingleLineReadTest()
         {
             //Arrange
-            CsvConfig config = new CsvConfig(',', Environment.NewLine, '"');
+            CsvConfig config = new CsvConfig(',', Environment.NewLine, '"', 0);
             string csvString = "a,b,c";
             List<string[]> expected = new List<string[]>();
             string[] line1 = { "a", "b", "c" };
@@ -32,7 +32,7 @@ namespace ConsoleLogger.Utilities.Tests
         public void SingleLineQuotedReadTest()
         {
             //Arrange
-            CsvConfig config = new CsvConfig(',', Environment.NewLine, '"');
+            CsvConfig config = new CsvConfig(',', Environment.NewLine, '"', 0);
             string csvString = "a,\",b,c,\",d";
             List<string[]> expected = new List<string[]>();
             string[] line1 = { "a", ",b,c,", "d" };
@@ -49,7 +49,7 @@ namespace ConsoleLogger.Utilities.Tests
         public void EmptyStringReadTest()
         {
             //Arrange
-            CsvConfig config = new CsvConfig(',', Environment.NewLine, '"');
+            CsvConfig config = new CsvConfig(',', Environment.NewLine, '"', 0);
             string csvString = "";
             List<string[]> expected = new List<string[]>(); 
 
@@ -64,7 +64,7 @@ namespace ConsoleLogger.Utilities.Tests
         public void MultiLineReadTest()
         {
             //Arrange
-            CsvConfig config = new CsvConfig(',', Environment.NewLine, '"');
+            CsvConfig config = new CsvConfig(',', Environment.NewLine, '"', 0);
             string csvString = "a,\",b,c,\",d\na,\",b,c,\",d";
             List<string[]> expected = new List<string[]>();
             string[] line1 = { "a", ",b,c,", "d" };

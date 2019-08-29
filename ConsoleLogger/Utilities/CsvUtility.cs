@@ -14,19 +14,21 @@ namespace ConsoleLogger.Utilities
         public char Delimiter { get; private set; }
         public string NewLineMark { get; private set; }
         public char QuotationMark { get; private set; }
+        public int IgnoreStartNLines { get; private set; }
 
-        public CsvConfig(char delimiter, string newLineMark, char quotationMark)
+        public CsvConfig(char delimiter, string newLineMark, char quotationMark, int ignoreStartNLines)
         {
             Delimiter = delimiter;
             NewLineMark = newLineMark;
             QuotationMark = quotationMark;
+            IgnoreStartNLines = ignoreStartNLines;
         }
 
         // useful configs
 
         public static CsvConfig Default
         {
-            get { return new CsvConfig(',', "\r\n", '\"'); }
+            get { return new CsvConfig(',', "\r\n", '\"', 0); }
         }
 
         // etc.
@@ -40,6 +42,10 @@ namespace ConsoleLogger.Utilities
             List<string[]> result = new List<string[]>();
             using (StringReader reader = new StringReader(csvFileContents))
             {
+                for (int i=0; i<m_config.IgnoreStartNLines; i++)
+                {
+                    reader.ReadLine();
+                }
                 while (true)
                 {
                     string line = reader.ReadLine();

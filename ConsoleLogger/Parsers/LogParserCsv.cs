@@ -15,16 +15,27 @@ namespace ConsoleLogger.Parsers
         int _levelIndex;
         int _outputIndex;
         string _location;
+        int _ignoreStartNLines;
         DateTimeFormatInfo _format;
 
-        public LogParserCsv(int timeIndex, DateTimeFormatInfo format, int levelIndex, int outputIndex, string location, string newline, char delimiter=',',  char quotemark = '"')
+        public LogParserCsv(
+            int timeIndex, 
+            DateTimeFormatInfo format, 
+            int levelIndex, 
+            int outputIndex, 
+            string location, 
+            string newline,
+            int ignoreFirstNLines = 1,
+            char delimiter=',',  
+            char quotemark = '"'
+        )
         {
             _timeIndex = timeIndex;
             _format = format;
             _levelIndex = levelIndex;
             _outputIndex = outputIndex;
             _location = location;
-            _csvConfig = new CsvConfig(delimiter, newline, quotemark);
+            _csvConfig = new CsvConfig(delimiter, newline, quotemark, ignoreFirstNLines);
         }
 
         public override List<LogEntry> Parse(string s)
@@ -35,9 +46,9 @@ namespace ConsoleLogger.Parsers
             {
                 DateTime time;
                 DateTime.TryParse(line[_timeIndex], _format, DateTimeStyles.AdjustToUniversal, out time);
-                if (time == null)
+                if (time == DateTime.MinValue)
                 {
-                    throw new FormatException("Error parsing time");
+                    //throw new FormatException("Error parsing time");
                 }
                 result.Add(new LogEntry(time, _location, line[_levelIndex], line[_outputIndex]));
             }

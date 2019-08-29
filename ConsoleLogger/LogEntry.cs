@@ -12,6 +12,7 @@ namespace ConsoleLogger
         string _location;
         string _level;
         string _output;
+        
 
         public LogEntry(DateTime time, string location, string level, string output)
         {
@@ -23,7 +24,17 @@ namespace ConsoleLogger
 
         public int CompareTo(object obj)
         {
-            return _time.CompareTo(obj);
+            return _time.CompareTo(((LogEntry)obj)._time);
+        }
+
+        public override string ToString()
+        {
+            return $"{_time.ToString()} | {_location} | {_level} | {_output}";
+        }
+
+        public string ToString(IFormatProvider dateFormat)
+        {
+            return $"{_time.ToString(dateFormat)} | {_location} | {_level} | {_output}";
         }
     }
 
