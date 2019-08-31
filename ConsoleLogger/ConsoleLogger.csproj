@@ -43,8 +43,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataSourceDB.cs" />
     <Compile Include="DataSources\DataSource.cs" />
     <Compile Include="DataSources\DataSourceFile.cs" />
+    <Compile Include="LogConfig.cs" />
     <Compile Include="LogEntry.cs" />
     <Compile Include="LogReaders\LogReader.cs" />
     <Compile Include="MasterLogger.cs" />
@@ -52,10 +54,12 @@
     <Compile Include="Parsers\LogParserCsv.cs" />
     <Compile Include="Parsers\LogParserXml.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utilities\ConfigUtility.cs" />
     <Compile Include="Utilities\CsvUtility.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

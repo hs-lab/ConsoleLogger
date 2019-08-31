@@ -16,11 +16,11 @@ namespace ConsoleLogger.Parsers
         int _outputIndex;
         string _location;
         int _ignoreStartNLines;
-        DateTimeFormatInfo _format;
+        string _format;
 
         public LogParserCsv(
             int timeIndex, 
-            DateTimeFormatInfo format, 
+            string format, 
             int levelIndex, 
             int outputIndex, 
             string location, 
@@ -45,7 +45,7 @@ namespace ConsoleLogger.Parsers
             foreach (string[] line in parsedText)
             {
                 DateTime time;
-                DateTime.TryParse(line[_timeIndex], _format, DateTimeStyles.AdjustToUniversal, out time);
+                DateTime.TryParseExact(line[_timeIndex], _format, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal, out time);
                 if (time == DateTime.MinValue)
                 {
                     //throw new FormatException("Error parsing time");

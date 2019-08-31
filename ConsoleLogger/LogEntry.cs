@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace ConsoleLogger
@@ -18,7 +19,8 @@ namespace ConsoleLogger
         {
             _time = time;
             _location = location;
-            _level = level;
+            _level = Regex.Replace(level, @"^[\W]+|[\W]+$",""); //trim level of leading and trailing non-word characters.
+            _level = _level.ToUpper(); //to uppercase for consistency; could use an Enum, but limits flexibility for new logs.
             _output = output;
         }
 
@@ -29,12 +31,12 @@ namespace ConsoleLogger
 
         public override string ToString()
         {
-            return $"{_time.ToString()} | {_location} | {_level} | {_output}";
+            return $"{_time},{_location.Replace("\"", "\"\"\"")},{_level},{_output.Replace("\"", "\"\"\"")}";
         }
 
         public string ToString(IFormatProvider dateFormat)
         {
-            return $"{_time.ToString(dateFormat)} | {_location} | {_level} | {_output}";
+            return $"{_time.ToString(dateFormat)},{_location.Replace("\"", "\"\"\"")},{_level},{_output.Replace("\"", "\"\"\"")}";
         }
     }
 

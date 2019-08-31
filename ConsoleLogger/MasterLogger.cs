@@ -7,6 +7,8 @@ using ConsoleLogger.DataSources;
 using ConsoleLogger.Parsers;
 using ConsoleLogger.LogReaders;
 using System.Globalization;
+using ConsoleLogger.Utilities;
+using System.IO;
 
 namespace ConsoleLogger
 {
@@ -14,19 +16,23 @@ namespace ConsoleLogger
     {
         static void Main(string[] args)
         {
-        
-            LogReader reader1 = new LogReader(new LogParserCsv(4, CultureInfo.GetCultureInfo("En-AU").DateTimeFormat, 5, 6, "CSV Payments", Environment.NewLine),
-                new DataSourceFile("c:\\temp\\csv\\payments.csv"));
-            LogReader reader2 = new LogReader(new LogParserCsv(0, DateTimeFormatInfo.InvariantInfo, 2, 3, "App log", Environment.NewLine, quotemark:'\0'),
-                new DataSourceFile("c:\\temp\\logs\\app.log"));
+            LogConfig config1 = new LogConfig(LogType.CSV, @"C:\temp\csv\payments.csv", "4", "dd/MM/yyyy", "5", "6");
+            LogConfig config2 = new LogConfig(LogType.CSV, @"c:\temp\logs\app.log", "0", "yyyy-MM-dd HH:mm:ss", "2", "3");
+            LogReader reader1 = ConfigUtility.ConfigToLogReader(config1);
+            LogReader reader2 = ConfigUtility.ConfigToLogReader(config2);
             List<LogEntry> entries1 = reader1.GetLogEntries();
             List<LogEntry> entries2 = reader2.GetLogEntries();
             List<LogEntry> entries = entries1;
             entries.AddRange(entries2);
             entries.Sort();
-            foreach (LogEntry entry in entries)
+
+            using (StreamWriter writer = File.AppendText(@"C:\temp\masterlog.log"))
             {
-                Console.WriteLine(entry.ToString(CultureInfo.GetCultureInfo("En-AU").DateTimeFormat));
+                foreach (LogEntry entry in entries)
+                {
+                    Console.WriteLine(entry.ToString(CultureInfo.GetCultureInfo("En-AU").DateTimeFormat));
+                    writer.WriteLine(entry.ToString(CultureInfo.GetCultureInfo("En-AU").DateTimeFormat));
+                }
             }
 
             Console.ReadKey();
