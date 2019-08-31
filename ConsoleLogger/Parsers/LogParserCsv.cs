@@ -8,49 +8,83 @@ using System.Globalization;
 
 namespace ConsoleLogger.Parsers
 {
+    /// <summary>A log parser for CSV files</summary>
+    /// <seealso cref="LogParser" />
     public class LogParserCsv:LogParser
     {
-        CsvConfig _csvConfig;
-        int _timeIndex;
-        int _levelIndex;
-        int _outputIndex;
-        string _location;
-        int _ignoreStartNLines;
-        string _format;
+        public CsvConfig CsvConfig { get; private set; }
+        public int TimeIndex { get; private set; }
+        public int LevelIndex { get; private set; }
+        public int OutputIndex { get; private set; }
+        public int LocationIndex { get; private set; }
+        public string Location { get; private set; }
+        public string TimeFormat { get; private set; }
 
         public LogParserCsv(
-            int timeIndex, 
-            string format, 
-            int levelIndex, 
-            int outputIndex, 
-            string location, 
-            string newline,
-            int ignoreFirstNLines = 1,
-            char delimiter=',',  
-            char quotemark = '"'
+            int TimeIndex,
+            string Format,
+            int LevelIndex,
+            int OutputIndex,
+            string Location, 
+            string Newline,
+            int IgnoreFirstNLines = 1,
+            char Delimiter=',',  
+            char Quotemark = '"'
         )
         {
-            _timeIndex = timeIndex;
-            _format = format;
-            _levelIndex = levelIndex;
-            _outputIndex = outputIndex;
-            _location = location;
-            _csvConfig = new CsvConfig(delimiter, newline, quotemark, ignoreFirstNLines);
+            this.TimeIndex = TimeIndex;
+            TimeFormat = Format;
+            this.LevelIndex = LevelIndex;
+            this.OutputIndex = OutputIndex;
+            this.Location = Location;
+            this.LocationIndex = -1;
+            CsvConfig = new CsvConfig(Delimiter, Newline, Quotemark, IgnoreFirstNLines);
         }
 
+        public LogParserCsv(
+            int TimeIndex,
+            string Format,
+            int LevelIndex,
+            int OutputIndex,
+            int LocationIndex,
+            string Newline,
+            int IgnoreFirstNLines = 1,
+            char Delimiter = ',',
+            char Quotemark = '"'
+        )
+        {
+            this.TimeIndex = TimeIndex;
+            TimeFormat = Format;
+            this.LevelIndex = LevelIndex;
+            this.OutputIndex = OutputIndex;
+            this.LocationIndex = LocationIndex;
+            this.Location = "";
+            CsvConfig = new CsvConfig(Delimiter, Newline, Quotemark, IgnoreFirstNLines);
+        }
+
+        /// <summary>  Converts a CSV string to a list of log entries.</summary>
+        /// <param name="s">The string.</param>
+        /// <returns>a List of LogEntries</returns>
         public override List<LogEntry> Parse(string s)
         {
-            List<string[]> parsedText = CsvReader.Read(s, _csvConfig);
+            List<string[]> parsedText = CsvReader.Read(s, CsvConfig);
             List<LogEntry> result = new List<LogEntry>();
             foreach (string[] line in parsedText)
             {
                 DateTime time;
-                DateTime.TryParseExact(line[_timeIndex], _format, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal, out time);
+                DateTime.TryParseExact(line[TimeIndex], TimeFormat, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal, out time);
                 if (time == DateTime.MinValue)
                 {
                     //throw new FormatException("Error parsing time");
                 }
-                result.Add(new LogEntry(time, _location, line[_levelIndex], line[_outputIndex]));
+
+                string location = Location;
+                if (LocationIndex >= 0)
+                {
+                    //read location from log instead 
+                    location = line[LocationIndex];
+                }
+                result.Add(new LogEntry(time, location, line[LevelIndex], line[OutputIndex]));
             }
             return result;
         }

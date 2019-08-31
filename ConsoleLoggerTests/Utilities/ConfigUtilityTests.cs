@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ConsoleLogger;
+using ConsoleLogger.Parsers;
 using FluentAssertions;
 using System.Xml.Linq;
 
@@ -17,7 +18,7 @@ namespace ConsoleLogger.Utilities.Tests
         [TestMethod()]
         public void serializeAndDeserializeConfigTest()
         {
-            LogConfig config = new LogConfig(ConsoleLogger.LogType.CSV, "location", "datefield", "dd-MM-YYYY HH:mm", "levelfield", "messagefield");
+            LogConfig config = new LogConfig(ConsoleLogger.LogType.CSV, "location", "datefield", "dd-MM-YYYY HH:mm", "levelfield", "messagefield", new string[] { Environment.NewLine, "1", ",", "\"" });
             List<LogConfig> configs = new List<LogConfig>();
             configs.Add(config);
             string path = @"C:\temp\logconfix.xml";

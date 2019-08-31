@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleLogger", "ConsoleLog
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleLoggerTests", "ConsoleLoggerTests\ConsoleLoggerTests.csproj", "{F72D6A50-5E5F-4481-8BF8-6A65CFBF3159}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogViewer", "LogViewer\LogViewer.csproj", "{7DBE0263-7839-4F6B-8C37-162FDD731A22}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{F72D6A50-5E5F-4481-8BF8-6A65CFBF3159}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F72D6A50-5E5F-4481-8BF8-6A65CFBF3159}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F72D6A50-5E5F-4481-8BF8-6A65CFBF3159}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7DBE0263-7839-4F6B-8C37-162FDD731A22}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7DBE0263-7839-4F6B-8C37-162FDD731A22}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7DBE0263-7839-4F6B-8C37-162FDD731A22}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7DBE0263-7839-4F6B-8C37-162FDD731A22}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

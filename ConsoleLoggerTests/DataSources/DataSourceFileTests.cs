@@ -18,15 +18,10 @@ namespace ConsoleLogger.DataSources.Tests
             //Arrage 
 
             //Act
-            DataSourceFile dsf = new DataSourceFile("c:\\temp\\nonexistentfile.txt");
+            DataSourceFile dsf = new DataSourceFile("c:\\temp\\nonexistentfile");
 
             //Expects exception
         }
 
-        [TestMethod()]
-        public void readTest()
-        {
-            Assert.Fail();
-        }
     }
 }

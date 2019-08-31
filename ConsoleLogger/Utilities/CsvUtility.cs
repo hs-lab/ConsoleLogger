@@ -36,7 +36,12 @@ namespace ConsoleLogger.Utilities
 
     public static class CsvReader
     {
-        
+
+        /// <summary>Reads the specified CSV file contents.</summary>
+        /// <param name="csvFileContents">The CSV file contents.</param>
+        /// <param name="m_config">The configuration for reading the CSV file.</param>
+        /// <returns>A list of string arrays, representing the lines of the CSV.</returns>
+        /// <exception cref="IndexOutOfRangeException">CSV file is shorter than the number of lines to be ignored.</exception>
         public static List<string[]> Read(string csvFileContents, CsvConfig m_config)
         {
             List<string[]> result = new List<string[]>();
@@ -44,7 +49,11 @@ namespace ConsoleLogger.Utilities
             {
                 for (int i=0; i<m_config.IgnoreStartNLines; i++)
                 {
-                    reader.ReadLine();
+                    string line = reader.ReadLine();
+                    if (line == null)
+                    {
+                        throw new IndexOutOfRangeException("CSV file is shorter than the number of lines to be ignored.");
+                    }
                 }
                 while (true)
                 {

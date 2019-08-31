@@ -7,9 +7,8 @@ using System.IO;
 using System.Xml.Serialization;
 using ConsoleLogger.LogReaders;
 using ConsoleLogger.DataSources;
-using ConsoleLogger.Parsers;
 
-namespace ConsoleLogger.Utilities
+namespace ConsoleLogger.Parsers
 {
     /// <summary>Utility class for reading and writing logger config file.</summary>
     public class ConfigUtility
@@ -44,16 +43,16 @@ namespace ConsoleLogger.Utilities
                         int.Parse(config.levelField),
                         int.Parse(config.messageField),
                         config.location,
-                        Environment.NewLine);
+                        config.additionalSettings[0],int.Parse(config.additionalSettings[1]),char.Parse(config.additionalSettings[2]),char.Parse(config.additionalSettings[3]));
                     source = new DataSourceFile(config.location);
                     break;
                 case LogType.XML:
-                    parser = new LogParserCsv(int.Parse(config.dateField),
-                         config.dateFormat,
-                         int.Parse(config.levelField),
-                         int.Parse(config.messageField),
-                         config.location,
-                         Environment.NewLine);
+                    parser = new LogParserXml(config.location, 
+                        config.additionalSettings[0],
+                        config.levelField,
+                        config.dateField,
+                        config.messageField
+                        );
                     source = new DataSourceFile(config.location);
                     break;
                 default:

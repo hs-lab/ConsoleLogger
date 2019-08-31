@@ -64,9 +64,9 @@
   <ItemGroup>
     <Compile Include="DataSources\DataSourceFileTests.cs" />
     <Compile Include="Parsers\LogParserCsvTests.cs" />
+    <Compile Include="Parsers\LogParserXmlTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\ConfigUtilityTests.cs" />
-    <Compile Include="Utilities\CsvConfigTests.cs" />
     <Compile Include="Utilities\CsvReaderTests.cs" />
   </ItemGroup>
   <ItemGroup>
