@@ -1,7 +1,6 @@
 ﻿using ConsoleLogger;
-using ConsoleLogger.DataSources;
 using ConsoleLogger.LogReaders;
-using ConsoleLogger.Parsers;
+using ConsoleLogger.ConfigHandler;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -17,12 +16,16 @@ namespace LogViewer.Controllers
 {
     public class LogsController : ApiController
     {
+        /// <summary>
+        ///   <para>
+        ///  Provides a RESTAPI to read the master log.</para>
+        /// </summary>
+        /// <returns></returns>
         public IHttpActionResult getLogs()
         {
-            LogReader reader1 = new LogReader(new LogParserCsv(0, "dd-MM-yyyy HH:mm", 2, 3, 1, Environment.NewLine),
-                new DataSourceFile(@"c:\temp\masterlog.log"));
-            List<LogEntry> entries1 = reader1.GetLogEntries();
-            List<LogEntry> entries = entries1;
+            LogConfig logConfig = new LogConfig(LogType.CSV, @"C:\temp\masterlog.log","1", "0", "dd-MM-yyyy HH:mm", "2", "3", new string[] { Environment.NewLine, "1", ",", "\"" });
+            LogReader reader = ConfigUtility.ConfigToLogReader(logConfig);
+            List<LogEntry> entries = reader.GetLogEntries();
             entries.Sort();
             StringBuilder s = new StringBuilder();
             foreach (LogEntry entry in entries)

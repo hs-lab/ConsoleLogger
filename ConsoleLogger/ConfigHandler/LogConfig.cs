@@ -20,6 +20,7 @@ namespace ConsoleLogger
     {
         public LogType type;
         public string location;
+        public string path;
         public string dateField;
         public string dateFormat;
         public string levelField;
@@ -48,6 +49,19 @@ namespace ConsoleLogger
         {
             type = Type;
             location = Location;
+            path = Location;
+            dateField = DateField;
+            dateFormat = DateFormat;
+            levelField = LevelField;
+            messageField = MessageField;
+            additionalSettings = AdditionalSettings;
+        }
+
+        public LogConfig(LogType Type, string Path, string Location, string DateField, string DateFormat, string LevelField, string MessageField, string[] AdditionalSettings)
+        {
+            type = Type;
+            location = Location;
+            path = Path;
             dateField = DateField;
             dateFormat = DateFormat;
             levelField = LevelField;

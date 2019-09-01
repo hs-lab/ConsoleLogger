@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 using ConsoleLogger.DataSources;
 using ConsoleLogger.Parsers;
 using ConsoleLogger.LogReaders;
+using ConsoleLogger.ConfigHandler;
 using System.Globalization;
-using ConsoleLogger.Utilities;
 using System.IO;
 
 namespace ConsoleLogger
@@ -23,6 +23,8 @@ namespace ConsoleLogger
             configs.Add(new LogConfig(LogType.CSV, @"C:\temp\csv\payments.csv", "4", "dd/MM/yyyy", "5", "6", new string[] { Environment.NewLine, "1", ",", "\"" }));
             configs.Add(new LogConfig(LogType.CSV, @"c:\temp\logs\app.log", "0", "yyyy-MM-dd HH:mm:ss", "2", "3", new string[] { Environment.NewLine, "0", ",", "\0" }));
             configs.Add(new LogConfig(LogType.XML, @"c:\temp\xml\log.xml", "timestamp", "yyyy-MM-dd HH:mm:ss", "level", "name", new string[] { "action" }));
+
+            //Check handling of non-existent file
             configs.Add(new LogConfig(LogType.CSV, @"C:\temp\csv\NoPayments.csv", "4", "dd/MM/yyyy", "5", "6", new string[] { Environment.NewLine, "1", ",", "\"" }));
 
             using (StreamWriter writer = File.AppendText(@"C:\temp\masterlog.log"))
