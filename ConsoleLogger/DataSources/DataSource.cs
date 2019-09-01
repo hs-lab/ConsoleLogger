@@ -11,5 +11,7 @@ namespace ConsoleLogger.DataSources
         protected string location;
 
         public abstract string Read();
+
+        public abstract void Watch();
     }
 }

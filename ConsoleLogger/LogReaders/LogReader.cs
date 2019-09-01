@@ -23,5 +23,10 @@ namespace ConsoleLogger.LogReaders
         {
             return _parser.Parse(_source.Read());
         }
+
+        public void WatchSource()
+        {
+            _source.Watch();
+        }
     }
 }
